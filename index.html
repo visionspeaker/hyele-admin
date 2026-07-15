@@ -150,7 +150,8 @@
     {key:'myeongham',name:'명함 신청',cls:'indigo',id:'1CjRNme-yIUembb9r9KH2N6QxRRoACKfgYjXjmJQGdv8',gid:'1150728864',url:'https://docs.google.com/spreadsheets/d/1CjRNme-yIUembb9r9KH2N6QxRRoACKfgYjXjmJQGdv8/edit?gid=1150728864#gid=1150728864'},
     {key:'geunmubok',name:'근무복 신청',cls:'pink',id:'103Zi1AEmXSyhQAyQ15TDtsLPI0cQlpAL0VmD_KlOuik',gid:'2138656241',url:'https://docs.google.com/spreadsheets/d/103Zi1AEmXSyhQAyQ15TDtsLPI0cQlpAL0VmD_KlOuik/edit?gid=2138656241#gid=2138656241'},
     {key:'sign',name:'전자서명',cls:'green',id:'1SRBXv26OpeT9SVxBDViQ0r25X_pZHqC0e9aTEMrQQic',gid:'1276163288',url:'https://docs.google.com/spreadsheets/d/1SRBXv26OpeT9SVxBDViQ0r25X_pZHqC0e9aTEMrQQic/edit?gid=1276163288#gid=1276163288'},
-    {key:'achasago',name:'아차사고',cls:'red',id:'1VzyXEdFlafYut1-s4sPHZ371w7PL4J0zHPR0YffdKQw',gid:'1352361115',url:'https://docs.google.com/spreadsheets/d/1VzyXEdFlafYut1-s4sPHZ371w7PL4J0zHPR0YffdKQw/edit?gid=1352361115#gid=1352361115'},
+    {key:'achasago_new',name:'아차사고',cls:'red',btn:'아차사고 (신규 앱)',id:'1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8',gid:'0',url:'https://docs.google.com/spreadsheets/d/1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8/edit?gid=0#gid=0'},
+    {key:'achasago_old',name:'아차사고',cls:'red',btn:'아차사고 (기존)',id:'1VzyXEdFlafYut1-s4sPHZ371w7PL4J0zHPR0YffdKQw',gid:'1352361115',url:'https://docs.google.com/spreadsheets/d/1VzyXEdFlafYut1-s4sPHZ371w7PL4J0zHPR0YffdKQw/edit?gid=1352361115#gid=1352361115'},
     {key:'anjeon',name:'안전용품',cls:'orange',id:'1GEb925nSJCM4UEJ1dVXf-1UKD6h8db99zCCNCDz9fdI',gid:'1810336059',url:'https://docs.google.com/spreadsheets/d/1GEb925nSJCM4UEJ1dVXf-1UKD6h8db99zCCNCDz9fdI/edit?gid=1810336059#gid=1810336059'}
   ];
   var ENTRIES=[], FAILED=[];
@@ -206,19 +207,19 @@
         if(!(date||name||parts.length)) return;
         ENTRIES.push({date:date, name:name, summary:parts.join(' · '), sheet:sheet});
       });
-    }catch(e){ FAILED.push(sheet.name); }
+    }catch(e){ FAILED.push(sheet.btn||sheet.name); }
   }
 
   function loadSheet(sheet){
     return new Promise(function(res){
-      var cbName='__gv_'+sheet.key+'_'+Math.floor(Math.random()*1e6);
+      var cbName='__gv_'+Math.floor(Math.random()*1e9);
       var done=false;
       var s=document.createElement('script');
       function finish(){ if(done)return; done=true; try{delete window[cbName];}catch(e){window[cbName]=undefined;} if(s.parentNode)s.parentNode.removeChild(s); res(); }
-      window[cbName]=function(resp){ if(resp && resp.table) ingest(sheet, resp); else FAILED.push(sheet.name); finish(); };
-      s.onerror=function(){ FAILED.push(sheet.name); finish(); };
+      window[cbName]=function(resp){ if(resp && resp.table) ingest(sheet, resp); else FAILED.push(sheet.btn||sheet.name); finish(); };
+      s.onerror=function(){ FAILED.push(sheet.btn||sheet.name); finish(); };
       s.src='https://docs.google.com/spreadsheets/d/'+sheet.id+'/gviz/tq?gid='+sheet.gid+'&tqx=out:json;responseHandler:'+cbName;
-      setTimeout(function(){ if(!done){FAILED.push(sheet.name); finish();} }, 15000);
+      setTimeout(function(){ if(!done){FAILED.push(sheet.btn||sheet.name); finish();} }, 15000);
       document.head.appendChild(s);
     });
   }
@@ -249,7 +250,7 @@
   function render(){
     var q=fQuery.trim().toLowerCase();
     var list=ENTRIES.filter(function(e){
-      if(fType!=='all' && e.sheet.key!==fType) return false;
+      if(fType!=='all' && e.sheet.name!==fType) return false;
       if(!inPeriod(e.date)) return false;
       if(q){ var hay=(e.name+' '+e.summary+' '+e.sheet.name).toLowerCase(); if(hay.indexOf(q)<0) return false; }
       return true;
@@ -278,9 +279,9 @@
 
   function buildUI(){
     document.getElementById('sheet-btns').innerHTML=SHEETS.map(function(s){
-      return '<a class="sbtn" href="'+s.url+'" target="_blank" rel="noopener"><span class="lbl"><span class="dot d-'+s.cls+'"></span>'+esc(s.name)+'</span><span class="go">↗</span></a>';
+      return '<a class="sbtn" href="'+s.url+'" target="_blank" rel="noopener"><span class="lbl"><span class="dot d-'+s.cls+'"></span>'+esc(s.btn||s.name)+'</span><span class="go">↗</span></a>';
     }).join('');
-    var tc=[{k:'all',n:'전체'}].concat(SHEETS.map(function(s){return {k:s.key,n:s.name};}));
+    var seen={}, tc=[{k:'all',n:'전체'}]; SHEETS.forEach(function(s){ if(!seen[s.name]){ seen[s.name]=1; tc.push({k:s.name,n:s.name}); } });
     document.getElementById('type-chips').innerHTML=tc.map(function(o){
       return '<div class="chip'+(o.k==='all'?' on':'')+'" data-type="'+o.k+'">'+esc(o.n)+'</div>';
     }).join('');
