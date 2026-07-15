@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>한양전공(주) · 관리자</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%236d28d9'/%3E%3Cpath d='M28 66V40h8v26zM46 66V30h8v36zM64 66V48h8v18z' fill='white'/%3E%3C/svg%3E">
+<style>
+  :root{
+    --p-dark:#4c2a86; --p:#6d28d9; --p-light:#8b5cf6;
+    --bg:#f5f4f9; --card:#fff; --text:#211d2e; --sub:#6b6580; --line:#eae7f2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+  a{color:inherit;}
+  header{background:linear-gradient(135deg,var(--p-dark),var(--p) 55%,var(--p-light));color:#fff;}
+  .head-in{max-width:1080px;margin:0 auto;padding:20px 22px;display:flex;align-items:center;gap:14px;}
+  .logo-tile{width:46px;height:46px;border-radius:13px;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .logo-tile svg{width:26px;height:26px;}
+  .head-tx h1{font-size:20px;letter-spacing:-.5px;}
+  .head-tx p{font-size:12.5px;opacity:.9;margin-top:2px;letter-spacing:1px;}
+  .head-badge{margin-left:auto;background:rgba(255,255,255,.18);color:#fff;font-size:12px;font-weight:700;padding:7px 14px;border-radius:20px;}
+  .wrap{max-width:1080px;margin:0 auto;padding:22px;}
+  .sec-title{font-size:14px;font-weight:800;color:var(--p-dark);margin:6px 2px 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .sec-title .cnt{font-size:12px;color:var(--sub);font-weight:600;}
+  section.block{margin-bottom:30px;}
+  .links{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+  .lcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 12px;text-decoration:none;color:var(--text);
+    display:flex;flex-direction:column;align-items:center;gap:9px;text-align:center;transition:transform .12s,box-shadow .12s;box-shadow:0 3px 10px rgba(33,29,46,.04);}
+  .lcard:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(109,40,217,.12);}
+  .lcard .ic{width:44px;height:44px;border-radius:12px;background:#efeafe;color:#6d28d9;display:flex;align-items:center;justify-content:center;}
+  .lcard .ic svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;}
+  .lcard .nm{font-size:13.5px;font-weight:700;}
+  .sheets{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+  .sbtn{display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--card);border:1px solid var(--line);
+    border-radius:12px;padding:12px 14px;text-decoration:none;color:var(--text);font-size:13.5px;font-weight:700;box-shadow:0 3px 10px rgba(33,29,46,.04);transition:.12s;}
+  .sbtn:hover{border-color:#cbb8ee;box-shadow:0 6px 14px rgba(109,40,217,.1);}
+  .sbtn .dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+  .sbtn .go{color:var(--sub);font-size:15px;}
+  .sbtn .lbl{flex:1;display:flex;align-items:center;gap:8px;min-width:0;}
+  .toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin:4px 0 14px;}
+  .chips{display:flex;flex-wrap:wrap;gap:7px;}
+  .chip{font-size:12.5px;padding:7px 13px;border:1px solid var(--line);border-radius:20px;background:#fff;color:var(--sub);cursor:pointer;user-select:none;font-weight:600;}
+  .chip.on{background:#6d28d9;border-color:#6d28d9;color:#fff;}
+  .search{flex:1;min-width:160px;display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:8px 14px;}
+  .search input{border:none;outline:none;flex:1;font-size:13.5px;font-family:inherit;background:none;color:var(--text);min-width:0;}
+  .search svg{width:16px;height:16px;stroke:#a99fc4;fill:none;stroke-width:2;}
+  .btn-refresh{background:#efeafe;color:#6d28d9;border:none;border-radius:20px;padding:8px 14px;font-size:12.5px;font-weight:700;cursor:pointer;font-family:inherit;}
+  .tablewrap{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 3px 12px rgba(33,29,46,.05);}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;}
+  thead th{background:#f3f0fb;color:#5a4b7d;font-weight:800;text-align:left;padding:11px 14px;font-size:12.5px;white-space:nowrap;}
+  tbody td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top;}
+  tbody tr:hover{background:#faf8ff;}
+  .dt{font-weight:700;white-space:nowrap;} .dt .tm{display:block;font-size:11px;color:var(--sub);font-weight:500;margin-top:1px;}
+  .badge{display:inline-block;font-size:11.5px;font-weight:800;padding:3px 10px;border-radius:9px;white-space:nowrap;}
+  .nm-c{font-weight:700;white-space:nowrap;}
+  .sum{color:#4a4459;line-height:1.5;}
+  .go-c a{color:#6d28d9;font-weight:700;text-decoration:none;white-space:nowrap;font-size:12.5px;}
+  .state{padding:40px 20px;text-align:center;color:var(--sub);font-size:14px;}
+  .spin{display:inline-block;width:22px;height:22px;border:3px solid #e3dcf5;border-top-color:#6d28d9;border-radius:50%;animation:sp 0.8s linear infinite;margin-bottom:10px;}
+  @keyframes sp{to{transform:rotate(360deg);}}
+  .b-blue{background:#e7f0fd;color:#1f5fa8} .b-amber{background:#fdf1dd;color:#a8720f} .b-teal{background:#e2f5f0;color:#0f7a63}
+  .b-indigo{background:#eceef6;color:#414f8f} .b-pink{background:#fdeaf1;color:#a63866} .b-green{background:#e9f6de;color:#4a7314}
+  .b-red{background:#fdecec;color:#b23b38} .b-orange{background:#fdeee1;color:#b45f16}
+  .d-blue{background:#3f86d6}.d-amber{background:#d99521}.d-teal{background:#1f9e86}.d-indigo{background:#5b6bb0}
+  .d-pink{background:#d65a86}.d-green{background:#639922}.d-red{background:#e0645f}.d-orange{background:#e08a3c}
+  footer{text-align:center;color:var(--sub);font-size:11.5px;padding:10px 0 30px;}
+  @media (max-width:680px){
+    .links{grid-template-columns:repeat(2,1fr);}
+    .sheets{grid-template-columns:repeat(2,1fr);}
+    thead{display:none;}
+    table,tbody,tr,td{display:block;width:100%;}
+    tbody tr{border-top:1px solid var(--line);padding:12px 14px;}
+    tbody tr:first-child{border-top:none;}
+    tbody td{border:none;padding:2px 0;}
+    tbody td.go-c{margin-top:6px;}
+    .dt .tm{display:inline;margin-left:6px;}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="head-in">
+    <div class="logo-tile">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V9M10 19V5M16 19v-7M20 19H3"/></svg>
+    </div>
+    <div class="head-tx">
+      <h1>한양전공(주) 관리자</h1>
+      <p>HANYANG ELECTRIC · ADMIN</p>
+    </div>
+    <div class="head-badge">관리자용</div>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="block">
+    <div class="sec-title">바로가기</div>
+    <div class="links">
+      <a class="lcard" href="http://www.hyele.co.kr/" target="_blank" rel="noopener">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M5 21V4h14v17"/><path d="M9 8h2M13 8h2M9 12h2M13 12h2M10 21v-4h4v4"/></svg></div><div class="nm">회사 홈페이지</div></a>
+      <a class="lcard" href="https://hyele.worpl.net/" target="_blank" rel="noopener">
+        <div class="ic"><svg viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4h6v3H9z"/><path d="M8.5 13.2l2.2 2.2 4.3-4.4"/></svg></div><div class="nm">전자결재</div></a>
+      <a class="lcard" href="https://login.mailplug.com/auth/login?host_domain=hyele.co.kr&" target="_blank" rel="noopener">
+        <div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M4 7.5l8 5.5 8-5.5"/></svg></div><div class="nm">메일</div></a>
+      <a class="lcard" href="https://notebooklm.google.com/notebook/ad9e0fc4-590e-419b-81bf-74e06e01a60e?authuser=0" target="_blank" rel="noopener">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 4l1.6 4.4L18 10l-4.4 1.6L12 16l-1.6-4.4L6 10l4.4-1.6z"/></svg></div><div class="nm">회사 규정 AI챗봇</div></a>
+      <a class="lcard" href="https://vision153.notion.site/76af3de4a3ed43e6a5b785fb42ed6c4c?source=copy_link" target="_blank" rel="noopener">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 20v-8"/><path d="M12 12C12 8.5 9.8 6.5 5.5 6.5 5.5 10 7.7 12 12 12z"/><path d="M12 11c0-2.6 2-4.4 6-4.4 0 2.6-2 4.4-6 4.4z"/></svg></div><div class="nm">신입사원 온보딩</div></a>
+      <a class="lcard" href="https://visionspeaker.github.io/tv-slideshow/admin.html" target="_blank" rel="noopener">
+        <div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></div><div class="nm">TV 슬라이드 관리자</div></a>
+      <a class="lcard" href="https://visionspeaker.github.io/hyele-app/" target="_blank" rel="noopener">
+        <div class="ic"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.6"/><rect x="13" y="4" width="7" height="7" rx="1.6"/><rect x="4" y="13" width="7" height="7" rx="1.6"/><rect x="13" y="13" width="7" height="7" rx="1.6"/></svg></div><div class="nm">임직원 앱</div></a>
+      <a class="lcard" href="https://visionspeaker.github.io/edu-sign/?gs=https%3A%2F%2Fscript.google.com%2Fmacros%2Fs%2FAKfycbzTLmcyfQcL56Yo4K04FMMPHsU-WieAzugyVeV9V2ybeQug00_LIf92vG2o6McYbJM%2Fexec" target="_blank" rel="noopener">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M14 4l6 6-9 9H5v-6z"/><path d="M13 5l6 6"/></svg></div><div class="nm">전자서명 시스템</div></a>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="sec-title">신청 통합 현황 <span class="cnt" id="cnt-line"></span></div>
+
+    <div class="toolbar">
+      <div class="chips" id="type-chips"></div>
+    </div>
+    <div class="toolbar">
+      <div class="chips" id="period-chips"></div>
+      <div class="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+        <input id="q" type="text" placeholder="신청자·내용 검색"></div>
+      <button class="btn-refresh" id="refresh">↻ 새로고침</button>
+    </div>
+
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>날짜</th><th>유형</th><th>신청자</th><th>내용</th><th>시트</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <div class="state" id="state"><span class="spin"></span><br>신청 데이터를 불러오는 중…</div>
+    </div>
+
+    <div style="font-size:12px;color:var(--sub);font-weight:700;margin:22px 2px 8px;">신청별 원본 시트 바로가기</div>
+    <div class="sheets" id="sheet-btns"></div>
+  </section>
+  <footer>한양전공(주) 경영지원부 · 관리자 전용 · 데이터는 각 구글 스프레드시트에서 실시간 조회</footer>
+</div>
+
+<script>
+  var SHEETS=[
+    {key:'jeungmyeong',name:'증명서 발급',cls:'blue',id:'1NE6SUrvdI7kR4gR65qgkqmVe7eDq6-meN01uOG09Zcc',gid:'1720996378',url:'https://docs.google.com/spreadsheets/d/1NE6SUrvdI7kR4gR65qgkqmVe7eDq6-meN01uOG09Zcc/edit?gid=1720996378#gid=1720996378'},
+    {key:'mulpum',name:'물품 구매',cls:'amber',id:'1YqJAuqVe7ZmFAbXpone0iXFjJStiTljA2t2ctweJSPg',gid:'0',url:'https://docs.google.com/spreadsheets/d/1YqJAuqVe7ZmFAbXpone0iXFjJStiTljA2t2ctweJSPg/edit?gid=0#gid=0'},
+    {key:'seoksik',name:'석식 신청',cls:'teal',id:'1aYMZrHK2NhMIyZDH8jofgI2zy0CHzRSnjTCsJiaGGxo',gid:'1301394300',url:'https://docs.google.com/spreadsheets/d/1aYMZrHK2NhMIyZDH8jofgI2zy0CHzRSnjTCsJiaGGxo/edit?gid=1301394300#gid=1301394300'},
+    {key:'myeongham',name:'명함 신청',cls:'indigo',id:'1CjRNme-yIUembb9r9KH2N6QxRRoACKfgYjXjmJQGdv8',gid:'1150728864',url:'https://docs.google.com/spreadsheets/d/1CjRNme-yIUembb9r9KH2N6QxRRoACKfgYjXjmJQGdv8/edit?gid=1150728864#gid=1150728864'},
+    {key:'geunmubok',name:'근무복 신청',cls:'pink',id:'103Zi1AEmXSyhQAyQ15TDtsLPI0cQlpAL0VmD_KlOuik',gid:'2138656241',url:'https://docs.google.com/spreadsheets/d/103Zi1AEmXSyhQAyQ15TDtsLPI0cQlpAL0VmD_KlOuik/edit?gid=2138656241#gid=2138656241'},
+    {key:'sign',name:'전자서명',cls:'green',id:'1SRBXv26OpeT9SVxBDViQ0r25X_pZHqC0e9aTEMrQQic',gid:'1276163288',url:'https://docs.google.com/spreadsheets/d/1SRBXv26OpeT9SVxBDViQ0r25X_pZHqC0e9aTEMrQQic/edit?gid=1276163288#gid=1276163288'},
+    {key:'achasago',name:'아차사고',cls:'red',id:'1VzyXEdFlafYut1-s4sPHZ371w7PL4J0zHPR0YffdKQw',gid:'1352361115',url:'https://docs.google.com/spreadsheets/d/1VzyXEdFlafYut1-s4sPHZ371w7PL4J0zHPR0YffdKQw/edit?gid=1352361115#gid=1352361115'},
+    {key:'anjeon',name:'안전용품',cls:'orange',id:'1GEb925nSJCM4UEJ1dVXf-1UKD6h8db99zCCNCDz9fdI',gid:'1810336059',url:'https://docs.google.com/spreadsheets/d/1GEb925nSJCM4UEJ1dVXf-1UKD6h8db99zCCNCDz9fdI/edit?gid=1810336059#gid=1810336059'}
+  ];
+  var ENTRIES=[], FAILED=[];
+  var fType='all', fPeriod='today', fQuery='';
+
+  function esc(s){return (s==null?'':String(s)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');}
+  function pad(n){return (n<10?'0':'')+n;}
+
+  function parseGvizDate(cell){
+    if(!cell) return null;
+    var v=cell.v;
+    if(typeof v==='string'){
+      var m=v.match(/Date\((\d+),(\d+),(\d+)(?:,(\d+),(\d+),(\d+))?\)/);
+      if(m) return new Date(+m[1],+m[2],+m[3],+(m[4]||0),+(m[5]||0),+(m[6]||0));
+    }
+    if(v instanceof Date) return v;
+    if(cell.f){var d=new Date(cell.f); if(!isNaN(d)) return d;}
+    return null;
+  }
+
+  function ingest(sheet, resp){
+    try{
+      var t=resp.table, cols=t.cols.map(function(c){return (c.label||'').trim();});
+      var tsIdx=cols.findIndex(function(l){return /타임스탬프|timestamp/i.test(l);});
+      if(tsIdx<0) tsIdx=t.cols.findIndex(function(c){return c.type==='datetime';});
+      var nameIdx=cols.findIndex(function(l){return /신청자|작성자|성명|이름|명단/.test(l);});
+      (t.rows||[]).forEach(function(r){
+        var c=r.c||[];
+        var dCell = tsIdx>=0 ? c[tsIdx] : null;
+        var date = parseGvizDate(dCell);
+        var name = (nameIdx>=0 && c[nameIdx] && c[nameIdx].v!=null) ? String(c[nameIdx].f||c[nameIdx].v) : '';
+        var parts=[];
+        for(var i=0;i<c.length;i++){
+          if(i===tsIdx||i===nameIdx) continue;
+          if(!cols[i]) continue;
+          var cell=c[i];
+          var val = cell? (cell.f!=null?cell.f:cell.v) : null;
+          if(val!=null){
+            var sv=String(val).trim();
+            if(sv!=='' && sv.toUpperCase()!=='FALSE' && sv.toUpperCase()!=='TRUE') parts.push(sv);
+          }
+        }
+        if(!(date||name||parts.length)) return;
+        ENTRIES.push({date:date, name:name, summary:parts.join(' · '), sheet:sheet});
+      });
+    }catch(e){ FAILED.push(sheet.name); }
+  }
+
+  function loadSheet(sheet){
+    return new Promise(function(res){
+      var cbName='__gv_'+sheet.key+'_'+Math.floor(Math.random()*1e6);
+      var done=false;
+      var s=document.createElement('script');
+      function finish(){ if(done)return; done=true; try{delete window[cbName];}catch(e){window[cbName]=undefined;} if(s.parentNode)s.parentNode.removeChild(s); res(); }
+      window[cbName]=function(resp){ if(resp && resp.table) ingest(sheet, resp); else FAILED.push(sheet.name); finish(); };
+      s.onerror=function(){ FAILED.push(sheet.name); finish(); };
+      s.src='https://docs.google.com/spreadsheets/d/'+sheet.id+'/gviz/tq?gid='+sheet.gid+'&tqx=out:json;responseHandler:'+cbName;
+      setTimeout(function(){ if(!done){FAILED.push(sheet.name); finish();} }, 15000);
+      document.head.appendChild(s);
+    });
+  }
+
+  function loadAll(){
+    ENTRIES=[]; FAILED=[];
+    var st=document.getElementById('state');
+    st.style.display=''; st.innerHTML='<span class="spin"></span><br>신청 데이터를 불러오는 중…';
+    document.getElementById('rows').innerHTML='';
+    Promise.all(SHEETS.map(loadSheet)).then(function(){
+      ENTRIES.sort(function(a,b){ return (b.date?b.date.getTime():0)-(a.date?a.date.getTime():0); });
+      render();
+    });
+  }
+
+  function inPeriod(d){
+    if(fPeriod==='all') return true;
+    if(!d) return false;
+    var now=new Date(), t=d.getTime();
+    if(fPeriod==='today'){ var s=new Date(now.getFullYear(),now.getMonth(),now.getDate()); return t>=s.getTime(); }
+    if(fPeriod==='7'){ return t>=now.getTime()-7*864e5; }
+    if(fPeriod==='30'){ return t>=now.getTime()-30*864e5; }
+    if(fPeriod==='month'){ var s2=new Date(now.getFullYear(),now.getMonth(),1); return t>=s2.getTime(); }
+    return true;
+  }
+
+  function render(){
+    var q=fQuery.trim().toLowerCase();
+    var list=ENTRIES.filter(function(e){
+      if(fType!=='all' && e.sheet.key!==fType) return false;
+      if(!inPeriod(e.date)) return false;
+      if(q){ var hay=(e.name+' '+e.summary+' '+e.sheet.name).toLowerCase(); if(hay.indexOf(q)<0) return false; }
+      return true;
+    });
+    var tb=document.getElementById('rows');
+    tb.innerHTML=list.map(function(e){
+      var d=e.date;
+      var ds = d? (d.getFullYear()+'.'+pad(d.getMonth()+1)+'.'+pad(d.getDate())) : '-';
+      var ts = d? (pad(d.getHours())+':'+pad(d.getMinutes())) : '';
+      var sum = e.summary.length>90 ? e.summary.slice(0,90)+'…' : e.summary;
+      return '<tr>'+
+        '<td data-label="날짜" class="dt">'+ds+'<span class="tm">'+ts+'</span></td>'+
+        '<td data-label="유형"><span class="badge b-'+e.sheet.cls+'">'+esc(e.sheet.name)+'</span></td>'+
+        '<td data-label="신청자" class="nm-c">'+esc(e.name||'-')+'</td>'+
+        '<td data-label="내용" class="sum">'+esc(sum||'-')+'</td>'+
+        '<td data-label="시트" class="go-c"><a href="'+e.sheet.url+'" target="_blank" rel="noopener">열기 ↗</a></td>'+
+        '</tr>';
+    }).join('');
+    var st=document.getElementById('state');
+    if(list.length===0){ st.style.display=''; st.innerHTML = ENTRIES.length? '조건에 맞는 신청이 없습니다.' : ('데이터를 불러오지 못했습니다.'+(FAILED.length?'<br>실패: '+[...new Set(FAILED)].join(', '):'')); }
+    else st.style.display='none';
+    var line='총 '+ENTRIES.length+'건 중 '+list.length+'건 표시';
+    if(FAILED.length) line+=' · 실패: '+[...new Set(FAILED)].join(', ');
+    document.getElementById('cnt-line').textContent=line;
+  }
+
+  function buildUI(){
+    document.getElementById('sheet-btns').innerHTML=SHEETS.map(function(s){
+      return '<a class="sbtn" href="'+s.url+'" target="_blank" rel="noopener"><span class="lbl"><span class="dot d-'+s.cls+'"></span>'+esc(s.name)+'</span><span class="go">↗</span></a>';
+    }).join('');
+    var tc=[{k:'all',n:'전체'}].concat(SHEETS.map(function(s){return {k:s.key,n:s.name};}));
+    document.getElementById('type-chips').innerHTML=tc.map(function(o){
+      return '<div class="chip'+(o.k==='all'?' on':'')+'" data-type="'+o.k+'">'+esc(o.n)+'</div>';
+    }).join('');
+    var pc=[{k:'today',n:'오늘'},{k:'all',n:'전체 기간'},{k:'7',n:'최근 7일'},{k:'30',n:'최근 30일'},{k:'month',n:'이번 달'}];
+    document.getElementById('period-chips').innerHTML=pc.map(function(o){
+      return '<div class="chip'+(o.k==='today'?' on':'')+'" data-period="'+o.k+'">'+esc(o.n)+'</div>';
+    }).join('');
+    document.getElementById('type-chips').addEventListener('click',function(e){var c=e.target.closest('.chip');if(!c)return;this.querySelectorAll('.chip').forEach(function(x){x.classList.remove('on');});c.classList.add('on');fType=c.dataset.type;render();});
+    document.getElementById('period-chips').addEventListener('click',function(e){var c=e.target.closest('.chip');if(!c)return;this.querySelectorAll('.chip').forEach(function(x){x.classList.remove('on');});c.classList.add('on');fPeriod=c.dataset.period;render();});
+    document.getElementById('q').addEventListener('input',function(){fQuery=this.value;render();});
+    document.getElementById('refresh').addEventListener('click',loadAll);
+  }
+
+  buildUI();
+  loadAll();
+</script>
+</body>
+</html>
