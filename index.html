@@ -177,8 +177,8 @@
     var d=new Date(s); return isNaN(d.getTime())?null:d;
   }
 
-  var DATE_RE=/타임스탬프|timestamp|일시|일자|날짜|작성일|제출일|등록일/i;
-  var NOISE_RE=/단말|agent|서명이미지|이미지|증빙|첨부|파일|ip/i;
+  var DATE_RE=/타임스탬프|timestamp|접수시각|접수시간|접수일시|시각|일시|일자|날짜|작성일|제출일|등록일/i;
+  var NOISE_RE=/단말|agent|서명이미지|이미지|사진|증빙|첨부|파일|ip/i;
   var NAME_RE=/신청자|작성자|성명|이름|명단/;
 
   function ingest(sheet, resp){
@@ -201,6 +201,7 @@
           var sv=String(val).trim();
           if(sv===''||sv.toUpperCase()==='FALSE'||sv.toUpperCase()==='TRUE') continue;
           if(sv.indexOf('Mozilla/')>=0) continue;
+          if(/^https?:\/\//i.test(sv)) continue;
           if(sv.length>120) sv=sv.slice(0,120)+'…';
           parts.push(sv);
         }
