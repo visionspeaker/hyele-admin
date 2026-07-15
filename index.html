@@ -104,14 +104,14 @@
         <div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M4 7.5l8 5.5 8-5.5"/></svg></div><div class="nm">메일</div></a>
       <a class="lcard" href="https://notebooklm.google.com/notebook/ad9e0fc4-590e-419b-81bf-74e06e01a60e?authuser=0" target="_blank" rel="noopener">
         <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 4l1.6 4.4L18 10l-4.4 1.6L12 16l-1.6-4.4L6 10l4.4-1.6z"/></svg></div><div class="nm">회사 규정 AI챗봇</div></a>
-      <a class="lcard" href="https://vision153.notion.site/76af3de4a3ed43e6a5b785fb42ed6c4c?source=copy_link" target="_blank" rel="noopener">
-        <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 20v-8"/><path d="M12 12C12 8.5 9.8 6.5 5.5 6.5 5.5 10 7.7 12 12 12z"/><path d="M12 11c0-2.6 2-4.4 6-4.4 0 2.6-2 4.4-6 4.4z"/></svg></div><div class="nm">신입사원 온보딩</div></a>
       <a class="lcard" href="https://visionspeaker.github.io/tv-slideshow/admin.html" target="_blank" rel="noopener">
         <div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></div><div class="nm">TV 슬라이드 관리자</div></a>
       <a class="lcard" href="https://visionspeaker.github.io/hyele-app/" target="_blank" rel="noopener">
         <div class="ic"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.6"/><rect x="13" y="4" width="7" height="7" rx="1.6"/><rect x="4" y="13" width="7" height="7" rx="1.6"/><rect x="13" y="13" width="7" height="7" rx="1.6"/></svg></div><div class="nm">임직원 앱</div></a>
       <a class="lcard" href="https://visionspeaker.github.io/edu-sign/?gs=https%3A%2F%2Fscript.google.com%2Fmacros%2Fs%2FAKfycbzTLmcyfQcL56Yo4K04FMMPHsU-WieAzugyVeV9V2ybeQug00_LIf92vG2o6McYbJM%2Fexec" target="_blank" rel="noopener">
         <div class="ic"><svg viewBox="0 0 24 24"><path d="M14 4l6 6-9 9H5v-6z"/><path d="M13 5l6 6"/></svg></div><div class="nm">전자서명 시스템</div></a>
+      <a class="lcard" href="https://vision153.notion.site/76af3de4a3ed43e6a5b785fb42ed6c4c?source=copy_link" target="_blank" rel="noopener">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 20v-8"/><path d="M12 12C12 8.5 9.8 6.5 5.5 6.5 5.5 10 7.7 12 12 12z"/><path d="M12 11c0-2.6 2-4.4 6-4.4 0 2.6-2 4.4-6 4.4z"/></svg></div><div class="nm">신입사원 온보딩</div></a>
     </div>
   </section>
 
@@ -229,6 +229,7 @@
     if(!d) return false;
     var now=new Date(), t=d.getTime();
     if(fPeriod==='today'){ var s=new Date(now.getFullYear(),now.getMonth(),now.getDate()); return t>=s.getTime(); }
+    if(fPeriod==='3'){ return t>=now.getTime()-3*864e5; }
     if(fPeriod==='7'){ return t>=now.getTime()-7*864e5; }
     if(fPeriod==='30'){ return t>=now.getTime()-30*864e5; }
     if(fPeriod==='month'){ var s2=new Date(now.getFullYear(),now.getMonth(),1); return t>=s2.getTime(); }
@@ -273,7 +274,7 @@
     document.getElementById('type-chips').innerHTML=tc.map(function(o){
       return '<div class="chip'+(o.k==='all'?' on':'')+'" data-type="'+o.k+'">'+esc(o.n)+'</div>';
     }).join('');
-    var pc=[{k:'today',n:'오늘'},{k:'all',n:'전체 기간'},{k:'7',n:'최근 7일'},{k:'30',n:'최근 30일'},{k:'month',n:'이번 달'}];
+    var pc=[{k:'today',n:'오늘'},{k:'3',n:'최근 3일'},{k:'7',n:'최근 7일'},{k:'month',n:'이번 달'},{k:'all',n:'전체 기간'}];
     document.getElementById('period-chips').innerHTML=pc.map(function(o){
       return '<div class="chip'+(o.k==='today'?' on':'')+'" data-period="'+o.k+'">'+esc(o.n)+'</div>';
     }).join('');
