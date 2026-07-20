@@ -184,7 +184,7 @@
     var d=new Date(s); return isNaN(d.getTime())?null:d;
   }
 
-  var DATE_RE=/타임스탬프|timestamp|접수시각|접수시간|접수일시|시각|일시|일자|날짜|작성일|제출일|등록일/i;
+  var DATE_RE=/타임스탬프|timestamp|접수시각|접수시간|접수일시|시각|일시|일자|날짜|신청일|요청일|접수일|작성일|제출일|등록일/i;
   var NOISE_RE=/단말|agent|서명이미지|이미지|사진|증빙|첨부|파일|ip/i;
   var NAME_RE=/신청자|작성자|성명|이름|명단/;
 
@@ -212,7 +212,7 @@
           if(sv.length>120) sv=sv.slice(0,120)+'…';
           parts.push(sv);
         }
-        if(!(date||name||parts.length)) return;
+        if(!date && !name) return;
         ENTRIES.push({date:date, name:name, summary:parts.join(' · '), sheet:sheet});
       });
     }catch(e){ FAILED.push(sheet.btn||sheet.name); }
