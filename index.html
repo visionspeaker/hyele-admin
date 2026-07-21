@@ -123,7 +123,7 @@
   </section>
 
   <section class="block">
-    <div class="sec-title">신청 통합 현황 <span class="cnt" id="cnt-line"></span></div>
+    <div class="sec-title">신청 통합 현황 <span class="cnt" id="cnt-line"></span><span class="cnt" id="updated" style="margin-left:auto;"></span></div>
 
     <div class="toolbar">
       <div class="chips" id="type-chips"></div>
@@ -188,7 +188,7 @@
   var NOISE_RE=/단말|agent|서명이미지|이미지|사진|증빙|첨부|파일|ip/i;
   var NAME_RE=/신청자|작성자|성명|이름|명단/;
 
-  function ingest(sheet, resp){
+  function ingest(sheet, resp, acc){
     try{
       var t=resp.table, cols=t.cols.map(function(c){return (c.label||'').trim();});
       var tsIdx=cols.findIndex(function(l){return DATE_RE.test(l);});
@@ -214,34 +214,42 @@
           parts.push(sv);
         }
         if(!date && !name) return;
-        ENTRIES.push({date:date, hasTime:hasTime, name:name, summary:parts.join(' · '), sheet:sheet});
+        acc.push({date:date, hasTime:hasTime, name:name, summary:parts.join(' · '), sheet:sheet});
       });
     }catch(e){ FAILED.push(sheet.btn||sheet.name); }
   }
 
-  function loadSheet(sheet){
+  function loadSheetInto(sheet, acc, fail){
     return new Promise(function(res){
       var cbName='__gv_'+Math.floor(Math.random()*1e9);
       var done=false;
       var s=document.createElement('script');
       function finish(){ if(done)return; done=true; try{delete window[cbName];}catch(e){window[cbName]=undefined;} if(s.parentNode)s.parentNode.removeChild(s); res(); }
-      window[cbName]=function(resp){ if(resp && resp.table) ingest(sheet, resp); else FAILED.push(sheet.btn||sheet.name); finish(); };
-      s.onerror=function(){ FAILED.push(sheet.btn||sheet.name); finish(); };
-      s.src='https://docs.google.com/spreadsheets/d/'+sheet.id+'/gviz/tq?gid='+sheet.gid+'&tqx=out:json;responseHandler:'+cbName;
-      setTimeout(function(){ if(!done){FAILED.push(sheet.btn||sheet.name); finish();} }, 15000);
+      window[cbName]=function(resp){ if(resp && resp.table) ingest(sheet, resp, acc); else fail.push(sheet.btn||sheet.name); finish(); };
+      s.onerror=function(){ fail.push(sheet.btn||sheet.name); finish(); };
+      s.src='https://docs.google.com/spreadsheets/d/'+sheet.id+'/gviz/tq?gid='+sheet.gid+'&_='+Date.now()+'&tqx=out:json;responseHandler:'+cbName;
+      setTimeout(function(){ if(!done){fail.push(sheet.btn||sheet.name); finish();} }, 15000);
       document.head.appendChild(s);
     });
   }
 
-  function loadAll(){
-    ENTRIES=[]; FAILED=[];
-    var st=document.getElementById('state');
-    st.style.display=''; st.innerHTML='<span class="spin"></span><br>신청 데이터를 불러오는 중…';
-    document.getElementById('rows').innerHTML='';
-    Promise.all(SHEETS.map(loadSheet)).then(function(){
+  function loadAll(silent){
+    if(!silent){
+      var st=document.getElementById('state');
+      st.style.display=''; st.innerHTML='<span class="spin"></span><br>신청 데이터를 불러오는 중…';
+      document.getElementById('rows').innerHTML='';
+      ENTRIES=[]; FAILED=[];
+    }
+    var acc=[], fail=[];
+    return Promise.all(SHEETS.map(function(sheet){ return loadSheetInto(sheet, acc, fail); })).then(function(){
+      ENTRIES=acc; FAILED=fail;
       ENTRIES.sort(function(a,b){ return (b.date?b.date.getTime():0)-(a.date?a.date.getTime():0); });
-      render();
+      render(); stampUpdated();
     });
+  }
+  function stampUpdated(){
+    var el=document.getElementById('updated');
+    if(el){ var d=new Date(); el.textContent='마지막 갱신 '+pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds()); }
   }
 
   function inPeriod(d){
@@ -301,11 +309,14 @@
     document.getElementById('type-chips').addEventListener('click',function(e){var c=e.target.closest('.chip');if(!c)return;this.querySelectorAll('.chip').forEach(function(x){x.classList.remove('on');});c.classList.add('on');fType=c.dataset.type;render();});
     document.getElementById('period-chips').addEventListener('click',function(e){var c=e.target.closest('.chip');if(!c)return;this.querySelectorAll('.chip').forEach(function(x){x.classList.remove('on');});c.classList.add('on');fPeriod=c.dataset.period;render();});
     document.getElementById('q').addEventListener('input',function(){fQuery=this.value;render();});
-    document.getElementById('refresh').addEventListener('click',loadAll);
+    document.getElementById('refresh').addEventListener('click',function(){loadAll(false);});
   }
 
   buildUI();
-  loadAll();
+  loadAll(false);
+  setInterval(function(){ if(!document.hidden) loadAll(true); }, 60000);
+  document.addEventListener('visibilitychange', function(){ if(!document.hidden) loadAll(true); });
+  window.addEventListener('focus', function(){ loadAll(true); });
 </script>
 </body>
 </html>
