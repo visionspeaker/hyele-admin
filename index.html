@@ -69,8 +69,10 @@
   .b-blue{background:#e7f0fd;color:#1f5fa8} .b-amber{background:#fdf1dd;color:#a8720f} .b-teal{background:#e2f5f0;color:#0f7a63}
   .b-indigo{background:#eceef6;color:#414f8f} .b-pink{background:#fdeaf1;color:#a63866} .b-green{background:#e9f6de;color:#4a7314}
   .b-red{background:#fdecec;color:#b23b38} .b-orange{background:#fdeee1;color:#b45f16}
+  .b-purple{background:#efeafe;color:#5b34b0} .b-cyan{background:#e0f2f5;color:#0e6b7c} .b-gray{background:#eef0f2;color:#4b5563}
   .d-blue{background:#3f86d6}.d-amber{background:#d99521}.d-teal{background:#1f9e86}.d-indigo{background:#5b6bb0}
   .d-pink{background:#d65a86}.d-green{background:#639922}.d-red{background:#e0645f}.d-orange{background:#e08a3c}
+  .d-purple{background:#6d28d9}.d-cyan{background:#0e7490}.d-gray{background:#5f5e5a}
   footer{text-align:center;color:var(--sub);font-size:11.5px;padding:10px 0 30px;}
   @media (max-width:680px){
     .links{grid-template-columns:repeat(2,1fr);}
@@ -157,9 +159,11 @@
     {key:'myeongham',name:'명함 신청',cls:'indigo',id:'1CjRNme-yIUembb9r9KH2N6QxRRoACKfgYjXjmJQGdv8',gid:'1150728864',url:'https://docs.google.com/spreadsheets/d/1CjRNme-yIUembb9r9KH2N6QxRRoACKfgYjXjmJQGdv8/edit?gid=1150728864#gid=1150728864'},
     {key:'geunmubok',name:'근무복 신청',cls:'pink',id:'103Zi1AEmXSyhQAyQ15TDtsLPI0cQlpAL0VmD_KlOuik',gid:'2138656241',url:'https://docs.google.com/spreadsheets/d/103Zi1AEmXSyhQAyQ15TDtsLPI0cQlpAL0VmD_KlOuik/edit?gid=2138656241#gid=2138656241'},
     {key:'sign',name:'전자서명',cls:'green',id:'1SRBXv26OpeT9SVxBDViQ0r25X_pZHqC0e9aTEMrQQic',gid:'1276163288',url:'https://docs.google.com/spreadsheets/d/1SRBXv26OpeT9SVxBDViQ0r25X_pZHqC0e9aTEMrQQic/edit?gid=1276163288#gid=1276163288'},
-    {key:'achasago_new',name:'아차사고',cls:'red',btn:'아차사고 (신규 앱)',id:'1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8',gid:'0',url:'https://docs.google.com/spreadsheets/d/1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8/edit?gid=0#gid=0'},
-    {key:'achasago_old',name:'아차사고',cls:'red',btn:'아차사고 (기존)',id:'1VzyXEdFlafYut1-s4sPHZ371w7PL4J0zHPR0YffdKQw',gid:'1352361115',url:'https://docs.google.com/spreadsheets/d/1VzyXEdFlafYut1-s4sPHZ371w7PL4J0zHPR0YffdKQw/edit?gid=1352361115#gid=1352361115'},
-    {key:'anjeon',name:'안전용품',cls:'orange',id:'1GEb925nSJCM4UEJ1dVXf-1UKD6h8db99zCCNCDz9fdI',gid:'1810336059',url:'https://docs.google.com/spreadsheets/d/1GEb925nSJCM4UEJ1dVXf-1UKD6h8db99zCCNCDz9fdI/edit?gid=1810336059#gid=1810336059'}
+    {key:'achasago_new',name:'아차사고',cls:'red',id:'1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8',gid:'0',url:'https://docs.google.com/spreadsheets/d/1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8/edit?gid=0#gid=0'},
+    {key:'anjeon',name:'안전용품',cls:'orange',id:'1GEb925nSJCM4UEJ1dVXf-1UKD6h8db99zCCNCDz9fdI',gid:'1810336059',url:'https://docs.google.com/spreadsheets/d/1GEb925nSJCM4UEJ1dVXf-1UKD6h8db99zCCNCDz9fdI/edit?gid=1810336059#gid=1810336059'},
+    {key:'upyeon',name:'우편업무',cls:'purple',id:'12V5RdJxcIO2_0lH6sCQEExkMSeyYgeZqDCgXqeSKEDU',gid:'0',url:'https://docs.google.com/spreadsheets/d/12V5RdJxcIO2_0lH6sCQEExkMSeyYgeZqDCgXqeSKEDU/edit#gid=0'},
+    {key:'bogeon',name:'보건상담',cls:'cyan',id:'1ZtzjKXnF3OMMqZ7utwvUbYVWo1YYNkXHIk6tf8wMUfo',gid:'0',url:'https://docs.google.com/spreadsheets/d/1ZtzjKXnF3OMMqZ7utwvUbYVWo1YYNkXHIk6tf8wMUfo/edit#gid=0'},
+    {key:'chogwa',name:'초과근무',cls:'gray',id:'1THYUnqZCAOW1RIgdJstNqvVa8UOO3DxALoBKCEET-gs',gid:'0',url:'https://docs.google.com/spreadsheets/d/1THYUnqZCAOW1RIgdJstNqvVa8UOO3DxALoBKCEET-gs/edit#gid=0'}
   ];
   var ENTRIES=[], FAILED=[];
   var fType='all', fPeriod='today', fQuery='';
