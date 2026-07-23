@@ -217,7 +217,7 @@
           if(sv.indexOf('Mozilla/')>=0) continue;
           if(/^https?:\/\//i.test(sv)) continue;
           if(sv.length>120) sv=sv.slice(0,120)+'…';
-          parts.push(sv);
+          parts.push(label+' '+sv);
         }
         if(!date && !name) return;
         acc.push({date:date, hasTime:hasTime, name:name, summary:parts.join(' · '), sheet:sheet});
