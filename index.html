@@ -31,13 +31,14 @@
   .sec-title{font-size:14px;font-weight:800;color:var(--p-dark);margin:6px 2px 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
   .sec-title .cnt{font-size:12px;color:var(--sub);font-weight:600;}
   section.block{margin-bottom:30px;}
-  .links{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
-  .lcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 12px;text-decoration:none;color:var(--text);
-    display:flex;flex-direction:column;align-items:center;gap:9px;text-align:center;transition:transform .12s,box-shadow .12s;box-shadow:0 3px 10px rgba(33,29,46,.04);}
-  .lcard:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(109,40,217,.12);}
-  .lcard .ic{width:44px;height:44px;border-radius:12px;background:#efeafe;color:#6d28d9;display:flex;align-items:center;justify-content:center;}
-  .lcard .ic svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;}
-  .lcard .nm{font-size:13.5px;font-weight:700;}
+  .links{display:grid;grid-template-columns:repeat(5,1fr);gap:20px 12px;}
+  .lcard{background:none;border:0;padding:4px 2px;text-decoration:none;color:var(--text);
+    display:flex;flex-direction:column;align-items:center;gap:9px;text-align:center;}
+  .lcard .ic{width:64px;height:64px;border-radius:16px;color:#fff;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 4px 10px rgba(33,29,46,.10);transition:transform .12s,box-shadow .12s;}
+  .lcard:hover .ic{transform:translateY(-2px);box-shadow:0 8px 18px rgba(109,40,217,.22);}
+  .lcard .ic svg{width:31px;height:31px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;}
+  .lcard .nm{font-size:12.5px;font-weight:700;line-height:1.25;}
   .sheets{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
   .sbtn{display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--card);border:1px solid var(--line);
     border-radius:12px;padding:12px 14px;text-decoration:none;color:var(--text);font-size:13.5px;font-weight:700;box-shadow:0 3px 10px rgba(33,29,46,.04);transition:.12s;}
@@ -75,7 +76,7 @@
   .d-purple{background:#6d28d9}.d-cyan{background:#0e7490}.d-gray{background:#5f5e5a}.d-lime{background:#8bab26}
   footer{text-align:center;color:var(--sub);font-size:11.5px;padding:10px 0 30px;}
   @media (max-width:680px){
-    .links{grid-template-columns:repeat(2,1fr);}
+    .links{grid-template-columns:repeat(4,1fr);}
     .sheets{grid-template-columns:repeat(2,1fr);}
     thead{display:none;}
     table,tbody,tr,td{display:block;width:100%;}
@@ -106,21 +107,25 @@
     <div class="sec-title">바로가기</div>
     <div class="links">
       <a class="lcard" href="https://hyele.worpl.net/" target="_blank" rel="noopener">
-        <div class="ic"><svg viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4h6v3H9z"/><path d="M8.5 13.2l2.2 2.2 4.3-4.4"/></svg></div><div class="nm">전자결재</div></a>
+        <div class="ic" style="background:#534AB7;"><svg viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4h6v3H9z"/><path d="M8.5 13.2l2.2 2.2 4.3-4.4"/></svg></div><div class="nm">전자결재</div></a>
       <a class="lcard" href="https://login.mailplug.com/auth/login?host_domain=hyele.co.kr&" target="_blank" rel="noopener">
-        <div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M4 7.5l8 5.5 8-5.5"/></svg></div><div class="nm">메일</div></a>
+        <div class="ic" style="background:#1D9E75;"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M4 7.5l8 5.5 8-5.5"/></svg></div><div class="nm">메일</div></a>
       <a class="lcard" href="https://notebooklm.google.com/notebook/91e8da16-aa82-4ac7-b727-e30a3d69955f" target="_blank" rel="noopener">
-        <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"/><path d="M8 9.5h8M8 12.5h5"/></svg></div><div class="nm">회사 정보 AI챗봇</div></a>
+        <div class="ic" style="background:#D4537E;"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"/><path d="M8 9.5h8M8 12.5h5"/></svg></div><div class="nm">회사 정보 AI챗봇</div></a>
       <a class="lcard" href="https://notebooklm.google.com/notebook/ad9e0fc4-590e-419b-81bf-74e06e01a60e?authuser=0" target="_blank" rel="noopener">
-        <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 4l1.6 4.4L18 10l-4.4 1.6L12 16l-1.6-4.4L6 10l4.4-1.6z"/></svg></div><div class="nm">회사 규정 AI챗봇</div></a>
+        <div class="ic" style="background:#7F77DD;"><svg viewBox="0 0 24 24"><path d="M12 4l1.6 4.4L18 10l-4.4 1.6L12 16l-1.6-4.4L6 10l4.4-1.6z"/></svg></div><div class="nm">회사 규정 AI챗봇</div></a>
       <a class="lcard" href="https://visionspeaker.github.io/tv-slideshow/admin.html" target="_blank" rel="noopener">
-        <div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></div><div class="nm">TV 슬라이드 관리자</div></a>
+        <div class="ic" style="background:#D85A30;"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></div><div class="nm">TV 슬라이드 관리자</div></a>
       <a class="lcard" href="https://visionspeaker.github.io/hyele-app/" target="_blank" rel="noopener">
-        <div class="ic"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.6"/><rect x="13" y="4" width="7" height="7" rx="1.6"/><rect x="4" y="13" width="7" height="7" rx="1.6"/><rect x="13" y="13" width="7" height="7" rx="1.6"/></svg></div><div class="nm">임직원 앱</div></a>
+        <div class="ic" style="background:#BA7517;"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.6"/><rect x="13" y="4" width="7" height="7" rx="1.6"/><rect x="4" y="13" width="7" height="7" rx="1.6"/><rect x="13" y="13" width="7" height="7" rx="1.6"/></svg></div><div class="nm">임직원 앱</div></a>
       <a class="lcard" href="https://visionspeaker.github.io/edu-sign/?gs=https%3A%2F%2Fscript.google.com%2Fmacros%2Fs%2FAKfycbzTLmcyfQcL56Yo4K04FMMPHsU-WieAzugyVeV9V2ybeQug00_LIf92vG2o6McYbJM%2Fexec" target="_blank" rel="noopener">
-        <div class="ic"><svg viewBox="0 0 24 24"><path d="M14 4l6 6-9 9H5v-6z"/><path d="M13 5l6 6"/></svg></div><div class="nm">전자서명 시스템</div></a>
+        <div class="ic" style="background:#185FA5;"><svg viewBox="0 0 24 24"><path d="M14 4l6 6-9 9H5v-6z"/><path d="M13 5l6 6"/></svg></div><div class="nm">전자서명 시스템</div></a>
       <a class="lcard" href="https://vision153.notion.site/76af3de4a3ed43e6a5b785fb42ed6c4c?source=copy_link" target="_blank" rel="noopener">
-        <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 20v-8"/><path d="M12 12C12 8.5 9.8 6.5 5.5 6.5 5.5 10 7.7 12 12 12z"/><path d="M12 11c0-2.6 2-4.4 6-4.4 0 2.6-2 4.4-6 4.4z"/></svg></div><div class="nm">신입사원 온보딩</div></a>
+        <div class="ic" style="background:#3B6D11;"><svg viewBox="0 0 24 24"><path d="M12 20v-8"/><path d="M12 12C12 8.5 9.8 6.5 5.5 6.5 5.5 10 7.7 12 12 12z"/><path d="M12 11c0-2.6 2-4.4 6-4.4 0 2.6-2 4.4-6 4.4z"/></svg></div><div class="nm">신입사원 온보딩</div></a>
+      <a class="lcard" href="http://www.hyele.co.kr/" target="_blank" rel="noopener">
+        <div class="ic" style="background:#378ADD;"><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/><path d="M10 19v-5h4v5"/></svg></div><div class="nm">홈페이지</div></a>
+      <a class="lcard" href="https://docs.google.com/spreadsheets/d/1H5BI_IEMYDjM2Mchbs9xWLqr_2qLBdWi_8Roxat1M54/edit?gid=0#gid=0" target="_blank" rel="noopener">
+        <div class="ic" style="background:#639922;"><svg viewBox="0 0 24 24"><path d="M9 8l-4 4 4 4"/><path d="M15 8l4 4-4 4"/></svg></div><div class="nm">소프트웨어</div></a>
     </div>
   </section>
 
@@ -147,9 +152,6 @@
 
     <div style="font-size:12px;color:var(--sub);font-weight:700;margin:22px 2px 8px;">신청별 원본 시트 바로가기</div>
     <div class="sheets" id="sheet-btns"></div>
-    <div class="sheets" style="margin-top:10px;">
-      <a class="sbtn" href="http://www.hyele.co.kr/" target="_blank" rel="noopener"><span class="lbl"><span class="dot" style="background:#6d28d9;"></span>회사 홈페이지</span><span class="go">↗</span></a>
-    </div>
   </section>
   <footer>한양전공(주) 경영지원부 · 관리자 전용 · 데이터는 각 구글 스프레드시트에서 실시간 조회</footer>
 </div>
