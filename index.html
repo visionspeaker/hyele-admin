@@ -313,7 +313,7 @@
   function buildUI(){
     document.getElementById('sheet-btns').innerHTML=SHEETS.map(function(s){
       return '<a class="sbtn" href="'+s.url+'" target="_blank" rel="noopener"><span class="lbl"><span class="dot d-'+s.cls+'"></span>'+esc(s.btn||s.name)+'</span><span class="go">↗</span></a>';
-    }).join('');
+    }).join('') + '<a class="sbtn" href="https://docs.google.com/spreadsheets/d/12TRwHtGkDmK0qSa-90NHzgSKOw6vEICNg4xEjkePs8U/edit?resourcekey=&gid=965964373#gid=965964373" target="_blank" rel="noopener"><span class="lbl"><span class="dot d-red"></span>직무스트레스</span><span class="go">↗</span></a>';
     var seen={}, tc=[{k:'all',n:'전체'}]; SHEETS.forEach(function(s){ if(!seen[s.name]){ seen[s.name]=1; tc.push({k:s.name,n:s.name}); } });
     document.getElementById('type-chips').innerHTML=tc.map(function(o){
       return '<div class="chip'+(o.k==='all'?' on':'')+'" data-type="'+o.k+'">'+esc(o.n)+'</div>';
