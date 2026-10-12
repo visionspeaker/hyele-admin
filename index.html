@@ -162,17 +162,17 @@
 
 <script>
   var SHEETS=[
-    {key:'jeungmyeong',name:'증명서 발급',cls:'blue',id:'1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8',gid:'2023548052',url:'https://docs.google.com/spreadsheets/d/1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8/edit?gid=2023548052#gid=2023548052',oldUrl:'https://docs.google.com/spreadsheets/d/1NE6SUrvdI7kR4gR65qgkqmVe7eDq6-meN01uOG09Zcc/edit?gid=1720996378#gid=1720996378'},
-    {key:'mulpum',name:'물품 구매',cls:'amber',id:'1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8',gid:'221160090',url:'https://docs.google.com/spreadsheets/d/1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8/edit?gid=221160090#gid=221160090',oldUrl:'https://docs.google.com/spreadsheets/d/1YqJAuqVe7ZmFAbXpone0iXFjJStiTljA2t2ctweJSPg/edit?gid=0#gid=0'},
+    {key:'jeungmyeong',viewName:'관리자뷰_증명서',viewGid:'1152959846',viewCheck:'제출처',name:'증명서 발급',cls:'blue',id:'1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8',gid:'2023548052',url:'https://docs.google.com/spreadsheets/d/1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8/edit?gid=2023548052#gid=2023548052',oldUrl:'https://docs.google.com/spreadsheets/d/1NE6SUrvdI7kR4gR65qgkqmVe7eDq6-meN01uOG09Zcc/edit?gid=1720996378#gid=1720996378'},
+    {key:'mulpum',viewName:'관리자뷰_물품구매',viewGid:'253669962',viewCheck:'물품명',name:'물품 구매',cls:'amber',id:'1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8',gid:'221160090',url:'https://docs.google.com/spreadsheets/d/1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8/edit?gid=221160090#gid=221160090',oldUrl:'https://docs.google.com/spreadsheets/d/1YqJAuqVe7ZmFAbXpone0iXFjJStiTljA2t2ctweJSPg/edit?gid=0#gid=0'},
     {key:'seoksik',name:'석식',cls:'teal',id:'1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8',gid:'1876966113',url:'https://docs.google.com/spreadsheets/d/1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8/edit?gid=1876966113#gid=1876966113',oldUrl:'https://docs.google.com/spreadsheets/d/1aYMZrHK2NhMIyZDH8jofgI2zy0CHzRSnjTCsJiaGGxo/edit?gid=1301394300#gid=1301394300'},
-    {key:'myeongham',name:'명함',cls:'indigo',id:'1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8',gid:'88909877',url:'https://docs.google.com/spreadsheets/d/1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8/edit?gid=88909877#gid=88909877',oldUrl:'https://docs.google.com/spreadsheets/d/1CjRNme-yIUembb9r9KH2N6QxRRoACKfgYjXjmJQGdv8/edit?gid=1150728864#gid=1150728864'},
-    {key:'geunmubok',name:'근무복',cls:'pink',id:'1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8',gid:'924899604',url:'https://docs.google.com/spreadsheets/d/1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8/edit?gid=924899604#gid=924899604',oldUrl:'https://docs.google.com/spreadsheets/d/103Zi1AEmXSyhQAyQ15TDtsLPI0cQlpAL0VmD_KlOuik/edit?gid=2138656241#gid=2138656241'},
+    {key:'myeongham',viewName:'관리자뷰_명함',viewGid:'1548448152',viewCheck:'영문 성명',name:'명함',cls:'indigo',id:'1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8',gid:'88909877',url:'https://docs.google.com/spreadsheets/d/1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8/edit?gid=88909877#gid=88909877',oldUrl:'https://docs.google.com/spreadsheets/d/1CjRNme-yIUembb9r9KH2N6QxRRoACKfgYjXjmJQGdv8/edit?gid=1150728864#gid=1150728864'},
+    {key:'geunmubok',viewName:'관리자뷰_근무복',viewGid:'1255586250',viewCheck:'근무복 종류',name:'근무복',cls:'pink',id:'1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8',gid:'924899604',url:'https://docs.google.com/spreadsheets/d/1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8/edit?gid=924899604#gid=924899604',oldUrl:'https://docs.google.com/spreadsheets/d/103Zi1AEmXSyhQAyQ15TDtsLPI0cQlpAL0VmD_KlOuik/edit?gid=2138656241#gid=2138656241'},
     {key:'sign',name:'전자서명',cls:'green',id:'1SRBXv26OpeT9SVxBDViQ0r25X_pZHqC0e9aTEMrQQic',gid:'1276163288',url:'https://docs.google.com/spreadsheets/d/1SRBXv26OpeT9SVxBDViQ0r25X_pZHqC0e9aTEMrQQic/edit?gid=1276163288#gid=1276163288'},
-    {key:'achasago_new',name:'아차사고',cls:'red',id:'1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8',gid:'0',url:'https://docs.google.com/spreadsheets/d/1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8/edit?gid=0#gid=0'},
-    {key:'anjeon',name:'안전용품',cls:'orange',id:'1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8',gid:'271623006',url:'https://docs.google.com/spreadsheets/d/1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8/edit?gid=271623006#gid=271623006',oldUrl:'https://docs.google.com/spreadsheets/d/1GEb925nSJCM4UEJ1dVXf-1UKD6h8db99zCCNCDz9fdI/edit?gid=1810336059#gid=1810336059'},
-    {key:'upyeon',name:'우편업무',cls:'purple',id:'1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8',gid:'624195499',url:'https://docs.google.com/spreadsheets/d/1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8/edit?gid=624195499#gid=624195499',oldUrl:'https://docs.google.com/spreadsheets/d/12V5RdJxcIO2_0lH6sCQEExkMSeyYgeZqDCgXqeSKEDU/edit?gid=0#gid=0'},
-    {key:'bogeon',name:'보건상담',cls:'cyan',id:'1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8',gid:'1028799201',url:'https://docs.google.com/spreadsheets/d/1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8/edit?gid=1028799201#gid=1028799201',oldUrl:'https://docs.google.com/spreadsheets/d/1ZtzjKXnF3OMMqZ7utwvUbYVWo1YYNkXHIk6tf8wMUfo/edit?gid=0#gid=0'},
-    {key:'chogwa',name:'초과근무',cls:'gray',id:'1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8',gid:'1084433568',url:'https://docs.google.com/spreadsheets/d/1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8/edit?gid=1084433568#gid=1084433568',oldUrl:'https://docs.google.com/spreadsheets/d/1THYUnqZCAOW1RIgdJstNqvVa8UOO3DxALoBKCEET-gs/edit?gid=0#gid=0'},
+    {key:'achasago_new',viewName:'관리자뷰_접수내역',viewGid:'975351309',viewCheck:'제안자',name:'아차사고',cls:'red',id:'1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8',gid:'0',url:'https://docs.google.com/spreadsheets/d/1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8/edit?gid=0#gid=0'},
+    {key:'anjeon',viewName:'관리자뷰_안전용품',viewGid:'206283791',viewCheck:'품목',name:'안전용품',cls:'orange',id:'1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8',gid:'271623006',url:'https://docs.google.com/spreadsheets/d/1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8/edit?gid=271623006#gid=271623006',oldUrl:'https://docs.google.com/spreadsheets/d/1GEb925nSJCM4UEJ1dVXf-1UKD6h8db99zCCNCDz9fdI/edit?gid=1810336059#gid=1810336059'},
+    {key:'upyeon',viewName:'관리자뷰_우편',viewGid:'504694633',viewCheck:'우편 종류',name:'우편업무',cls:'purple',id:'1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8',gid:'624195499',url:'https://docs.google.com/spreadsheets/d/1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8/edit?gid=624195499#gid=624195499',oldUrl:'https://docs.google.com/spreadsheets/d/12V5RdJxcIO2_0lH6sCQEExkMSeyYgeZqDCgXqeSKEDU/edit?gid=0#gid=0'},
+    {key:'bogeon',viewName:'관리자뷰_보건상담',viewGid:'1860942832',viewCheck:'참석 희망자 성명',name:'보건상담',cls:'cyan',id:'1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8',gid:'1028799201',url:'https://docs.google.com/spreadsheets/d/1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8/edit?gid=1028799201#gid=1028799201',oldUrl:'https://docs.google.com/spreadsheets/d/1ZtzjKXnF3OMMqZ7utwvUbYVWo1YYNkXHIk6tf8wMUfo/edit?gid=0#gid=0'},
+    {key:'chogwa',viewName:'관리자뷰_초과근무',viewGid:'1856904328',viewCheck:'업무내용',name:'초과근무',cls:'gray',id:'1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8',gid:'1084433568',url:'https://docs.google.com/spreadsheets/d/1ed6NRw-LXegq4anXZlyNCF4hJRZC87ycr9iA5pL7XY8/edit?gid=1084433568#gid=1084433568',oldUrl:'https://docs.google.com/spreadsheets/d/1THYUnqZCAOW1RIgdJstNqvVa8UOO3DxALoBKCEET-gs/edit?gid=0#gid=0'},
     {key:'welcome',name:'웰컴모니터',cls:'lime',id:'11n3Sz5DLuGxNR2mwYeh4eExwRWnrkoLVqwOsBdj62kU',gid:'1071161954',url:'https://docs.google.com/spreadsheets/d/11n3Sz5DLuGxNR2mwYeh4eExwRWnrkoLVqwOsBdj62kU/edit?gid=1071161954#gid=1071161954'}
   ];
   var ENTRIES=[], FAILED=[];
@@ -235,16 +235,30 @@
     }catch(e){ FAILED.push(sheet.btn||sheet.name); }
   }
 
+  // viewGid가 있는 시트는 숨긴 행까지 담긴 '관리자뷰_탭' 사본(숨김 시트)을 읽는다(gviz는 숨긴 행을 빼고 주므로).
+  // 사본을 못 읽거나(없는 gid면 gviz가 첫 탭을 대신 줌) 그 탭 고유 열(viewCheck)이 없으면 원본 탭(gid)으로 다시 읽는다.
   function loadSheetInto(sheet, acc, fail){
+    if(!sheet.viewGid) return gvizLoad(sheet.gid, sheet, acc).then(function(ok){ if(!ok) fail.push(sheet.btn||sheet.name); });
+    return gvizLoad(sheet.viewGid, sheet, acc, sheet.viewCheck).then(function(ok){
+      if(ok) return;
+      return gvizLoad(sheet.gid, sheet, acc).then(function(ok2){ if(!ok2) fail.push(sheet.btn||sheet.name); });
+    });
+  }
+
+  function gvizLoad(gid, sheet, acc, mustHave){
     return new Promise(function(res){
       var cbName='__gv_'+Math.floor(Math.random()*1e9);
       var done=false;
       var s=document.createElement('script');
-      function finish(){ if(done)return; done=true; try{delete window[cbName];}catch(e){window[cbName]=undefined;} if(s.parentNode)s.parentNode.removeChild(s); res(); }
-      window[cbName]=function(resp){ if(resp && resp.table) ingest(sheet, resp, acc); else fail.push(sheet.btn||sheet.name); finish(); };
-      s.onerror=function(){ fail.push(sheet.btn||sheet.name); finish(); };
-      s.src='https://docs.google.com/spreadsheets/d/'+sheet.id+'/gviz/tq?gid='+sheet.gid+'&_='+Date.now()+'&tqx=out:json;responseHandler:'+cbName;
-      setTimeout(function(){ if(!done){fail.push(sheet.btn||sheet.name); finish();} }, 15000);
+      function finish(ok){ if(done)return; done=true; try{delete window[cbName];}catch(e){window[cbName]=undefined;} if(s.parentNode)s.parentNode.removeChild(s); res(ok); }
+      window[cbName]=function(resp){
+        if(!resp || !resp.table) return finish(false);
+        if(mustHave && !resp.table.cols.some(function(c){ return (c.label||'').trim()===mustHave; })) return finish(false);
+        ingest(sheet, resp, acc); finish(true);
+      };
+      s.onerror=function(){ finish(false); };
+      s.src='https://docs.google.com/spreadsheets/d/'+sheet.id+'/gviz/tq?gid='+gid+(mustHave?'&headers=1':'')+'&_='+Date.now()+'&tqx=out:json;responseHandler:'+cbName;
+      setTimeout(function(){ finish(false); }, 15000);
       document.head.appendChild(s);
     });
   }
