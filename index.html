@@ -124,15 +124,14 @@
   #board .bch b{font-size:1.35em;white-space:nowrap}
   #board .bch .n{margin-left:auto;font-size:1.25em;font-weight:900;min-width:1.9em;text-align:center;border-radius:999px;padding:.05em .55em;background:rgba(255,255,255,.12)}
   #board .bch .n.on{background:#fff;color:#2b1957}
-  #board .bitems{flex:1;min-height:0;padding:.7em;display:grid;grid-template-columns:repeat(auto-fill,minmax(14.5em,1fr));grid-auto-rows:min-content;gap:.6em;overflow:hidden;align-content:start}
-  #board .bstack .bitems{grid-template-columns:repeat(auto-fill,minmax(13em,1fr))}
-  #board .bit{background:rgba(255,255,255,.08);border-radius:.75em;padding:.6em .8em;border-top:.28em solid transparent;min-width:0}
-  #board .bit .tm{display:flex;align-items:center;gap:.4em;font-size:.98em;opacity:.85;font-weight:700;font-variant-numeric:tabular-nums}
-  #board .bit .tm .ago{margin-left:auto;font-weight:600;opacity:.8}
-  #board .bit .tm .nw{font-size:.8em;font-weight:900;background:#fbbf24;color:#3b2500;border-radius:.35em;padding:.05em .4em}
-  #board .bit .nm{font-size:1.3em;font-weight:800;margin-top:.1em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  #board .bit .ds{font-size:1.02em;opacity:.85;margin-top:.1em;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-  #board .bit.new{background:rgba(251,191,36,.16);border-top-color:#fbbf24!important;animation:bpulse 2.4s ease-in-out infinite}
+  /* 간략형(10/27): 신청 1건 = 한 줄 알림(시간 · 이름 · 핵심 한 가지). 업무 처리용이 아니라 "신청 들어옴" 알림용 */
+  #board .bitems{flex:1;min-height:0;padding:.5em .7em;display:grid;grid-template-columns:repeat(auto-fill,minmax(19em,1fr));grid-auto-rows:min-content;gap:.35em .8em;overflow:hidden;align-content:start}
+  #board .bit{display:flex;align-items:center;gap:.6em;background:rgba(255,255,255,.06);border-radius:.55em;padding:.45em .7em;border-left:.28em solid transparent;min-width:0;font-size:1.15em;line-height:1.3}
+  #board .bit .tm{font-weight:800;opacity:.85;font-variant-numeric:tabular-nums;flex:none}
+  #board .bit .nm{font-weight:800;flex:none;max-width:7em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #board .bit .ds{opacity:.8;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #board .bit .nw{font-size:.72em;font-weight:900;background:#fbbf24;color:#3b2500;border-radius:.35em;padding:.1em .4em;flex:none}
+  #board .bit.new{background:rgba(251,191,36,.16);border-left-color:#fbbf24!important;animation:bpulse 2.4s ease-in-out infinite}
   @keyframes bpulse{50%{background:rgba(251,191,36,.28)}}
   #board .bmore{grid-column:1/-1;font-size:1em;opacity:.7;text-align:center;padding:.2em 0}
   #board .bnone{grid-column:1/-1;font-size:1.1em;opacity:.45;text-align:center;padding:1.2em 0}
@@ -225,6 +224,13 @@ var BOARD_KEYS=['jeungmyeong','mulpum','myeongham','geunmubok','anjeon','upyeon'
 var BOARD_COLOR={jeungmyeong:'#60a5fa',mulpum:'#fbbf24',myeongham:'#a5b4fc',geunmubok:'#f472b6',anjeon:'#fb923c',upyeon:'#c084fc',welcome:'#a3e635'};
 /* 2단 가로형 배치 — 위: 물품·안전용품·증명서 / 아래: 우편·근무복·[명함+웰컴모니터] (최근 3개월 신청 빈도 기준) */
 var BOARD_LAYOUT=['mulpum','anjeon','jeungmyeong','upyeon','geunmubok',['myeongham','welcome']];
+/* 한 줄에 보일 '핵심 한 가지' — 시트 칸 이름. 연락처·요청사항 등은 표시하지 않는다(값만 숫자면 칸 이름을 앞에 붙임) */
+var BOARD_KEY={mulpum:['물품명','수량'], anjeon:['품목','사이즈 또는 수량'], jeungmyeong:['증명서 선택 (복수 가능)'],
+  upyeon:['우편 종류','발송일'], geunmubok:['근무복 종류','근무복 사이즈'], myeongham:['수량'], welcome:['송출 일시']};
+function boardKeyText(key, e){
+  var cs=e.cells||{}, out=(BOARD_KEY[key]||[]).map(function(lb){ var v=cs[lb]; if(!v) return ''; return /^-?[\d,.]+$/.test(v)? lb+' '+v : v; }).filter(Boolean);
+  return out.length? out.join(' · ') : '';
+}
 var BOARD_SHIFT=[[0,0],[10,6],[-8,12],[6,-10],[-12,-4],[4,10]];
 var BOARD={data:[], at:0, fail:0, loading:false};
 function bPad(n){return (n<10?'0':'')+n;}
@@ -257,10 +263,8 @@ function boardPaint(){
       (its.length? its.map(function(e){
         var min=Math.floor((nowT-e.date.getTime())/60000), isNew=e.hasTime && min<=30;
         if(isNew) nw++;
-        var ago=!e.hasTime?'':(min<1?'방금':min<60?min+'분 전':Math.floor(min/60)+'시간 전');
-        return '<div class="bit'+(isNew?' new':'')+'" style="border-top-color:'+BOARD_COLOR[key]+'66"><div class="tm">'+(isNew?'<span class="nw">NEW</span>':'')+
-          (e.hasTime? bPad(e.date.getHours())+':'+bPad(e.date.getMinutes()) : '오늘')+'<span class="ago">'+ago+'</span></div>'+
-          '<div class="nm">'+esc(e.name||'-')+'</div><div class="ds">'+esc(e.summary||'')+'</div></div>';
+        return '<div class="bit'+(isNew?' new':'')+'" style="border-left-color:'+BOARD_COLOR[key]+'88">'+(isNew?'<span class="nw">NEW</span>':'')+
+          '<span class="tm">'+(e.hasTime? bPad(e.date.getHours())+':'+bPad(e.date.getMinutes()) : '오늘')+'</span><span class="nm">'+esc(e.name||'-')+'</span><span class="ds">'+esc(boardKeyText(key,e))+'</span></div>';
       }).join('') : '<div class="bnone">오늘 들어온 신청 없음</div>')+'</div></div>';
   }
   var cols=BOARD_LAYOUT.map(function(k){ return Array.isArray(k)? '<div class="bstack">'+k.map(panel).join('')+'</div>' : panel(k); }).join('');
@@ -379,7 +383,9 @@ function boardBoot(){
           else parts.push(sv);
         }
         if(!date && !name) return;
-        acc.push({date:date, hasTime:hasTime, name:name, summary:parts.join(' · '), sheet:sheet});
+        var cells={};
+        for(var q=0;q<c.length;q++){ if(!cols[q]) continue; var cq=c[q], vq=cq?(cq.f!=null?cq.f:cq.v):null; if(vq!=null && String(vq).trim()!=='') cells[cols[q]]=String(vq).trim(); }
+        acc.push({date:date, hasTime:hasTime, name:name, summary:parts.join(' · '), cells:cells, sheet:sheet});
       });
     }catch(e){ FAILED.push(sheet.btn||sheet.name); }
   }
