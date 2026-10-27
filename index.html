@@ -86,6 +86,54 @@
     tbody td.go-c{margin-top:6px;}
     .dt .tm{display:inline;margin-left:6px;}
   }
+
+  /* ── 오늘의 신청 현황판 (?board, 2026-10-27) — 모니터 한 화면, 스크롤 없음 ── */
+  body.boardmode{overflow:hidden;height:100vh;background:#160f2b}
+  body.boardmode > *:not(#board):not(#boardHint){display:none!important}
+  #board{position:fixed;inset:0;display:flex;flex-direction:column;padding:2.2vh 1.6vw 1.8vh;gap:1.6vh;color:#fff;
+    font-size:min(0.95vw,1.75vh);transition:background 2s,filter .6s;--sx:0px;--sy:0px}
+  #board > *{transform:translate(var(--sx),var(--sy));transition:transform 1.5s}
+  #board.th0{background:linear-gradient(135deg,#1d1238,#2b1957)}
+  #board.th1{background:linear-gradient(135deg,#0f1d36,#17305a)}
+  #board.th2{background:linear-gradient(135deg,#0d2a2b,#14403f)}
+  #board.night{filter:brightness(.3)}
+  #board .btop{display:flex;align-items:center;gap:1.2em}
+  #board .blogo{width:2.9em;height:2.9em;border-radius:.8em;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden}
+  #board .blogo img{width:100%;height:100%;display:block}
+  #board .bttl b{display:block;font-size:2em;letter-spacing:-.03em}
+  #board .bttl span{font-size:1.05em;opacity:.7;letter-spacing:.08em}
+  #board .bstats{display:flex;gap:.8em;margin-left:2em}
+  #board .bst{background:rgba(255,255,255,.08);border-radius:.9em;padding:.55em 1.2em;min-width:7.5em}
+  #board .bst .k{font-size:.95em;opacity:.7;font-weight:700}
+  #board .bst .v{font-size:2.2em;font-weight:900;line-height:1.1}
+  #board .bst.hl .v{color:#fbbf24}
+  #board .bclock{margin-left:auto;text-align:right}
+  #board .bclock b{display:block;font-size:2.6em;font-weight:900;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  #board .bclock span{font-size:1.05em;opacity:.75}
+  #board .blive{display:inline-flex;align-items:center;gap:.4em}
+  #board .blive i{width:.6em;height:.6em;border-radius:50%;background:#22c55e;box-shadow:0 0 0 .25em rgba(34,197,94,.25)}
+  #board .blive.off i{background:#fbbf24;box-shadow:0 0 0 .25em rgba(251,191,36,.25)}
+  #board .bcols{flex:1;min-height:0;display:grid;grid-template-columns:repeat(7,1fr);gap:.9vw}
+  #board .bcol{background:rgba(255,255,255,.07);border-radius:1em;display:flex;flex-direction:column;min-height:0;overflow:hidden}
+  #board .bch{display:flex;align-items:center;gap:.5em;padding:.85em 1em;border-bottom:1px solid rgba(255,255,255,.1)}
+  #board .bch i{width:.75em;height:.75em;border-radius:50%;flex:none}
+  #board .bch b{font-size:1.35em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #board .bch .n{margin-left:auto;font-size:1.25em;font-weight:900;min-width:1.9em;text-align:center;border-radius:999px;padding:.05em .55em;background:rgba(255,255,255,.12)}
+  #board .bch .n.on{background:#fff;color:#2b1957}
+  #board .bitems{flex:1;min-height:0;padding:.6em;display:flex;flex-direction:column;gap:.55em;overflow:hidden}
+  #board .bit{background:rgba(255,255,255,.08);border-radius:.75em;padding:.65em .8em;border-left:.32em solid transparent;flex:none}
+  #board .bit .tm{display:flex;align-items:center;gap:.4em;font-size:1em;opacity:.85;font-weight:700;font-variant-numeric:tabular-nums}
+  #board .bit .tm .ago{margin-left:auto;font-weight:600;opacity:.8}
+  #board .bit .tm .nw{font-size:.8em;font-weight:900;background:#fbbf24;color:#3b2500;border-radius:.35em;padding:.05em .4em}
+  #board .bit .nm{font-size:1.35em;font-weight:800;margin-top:.15em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #board .bit .ds{font-size:1.05em;opacity:.85;margin-top:.15em;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  #board .bit.new{background:rgba(251,191,36,.16);border-left-color:#fbbf24!important;animation:bpulse 2.4s ease-in-out infinite}
+  @keyframes bpulse{50%{background:rgba(251,191,36,.28)}}
+  #board .bmore{font-size:1.05em;opacity:.7;text-align:center;padding:.3em 0;flex:none}
+  #board .bnone{margin:auto;font-size:1.15em;opacity:.45;text-align:center;line-height:1.6}
+  #board .bfoot{display:flex;align-items:center;gap:1.2em;font-size:1em;opacity:.6}
+  #board .bfoot .r{margin-left:auto}
+  #boardHint{position:fixed;left:50%;bottom:2vh;transform:translateX(-50%);z-index:10000;background:rgba(0,0,0,.6);color:#fff;border-radius:999px;padding:8px 16px;font-size:14px}
 </style>
 </head>
 <body>
@@ -159,6 +207,98 @@
   </section>
   <footer>한양전공(주) 경영지원부 · 관리자 전용 · 데이터는 각 구글 스프레드시트에서 실시간 조회</footer>
 </div>
+
+<script>
+/* ══════════ 오늘의 신청 현황판 (2026-10-27) ══════════
+ *  사무실 모니터에 …/hyele-admin/?board 로 계속 띄워 두는 전용 화면.
+ *  오늘 0시 이후 들어온 신청 7종을 하루 동안 그대로 보여 준다(처리 여부와 무관, 화면에서 지우는 기능 없음). 다음 날 0시에 새로 시작.
+ *  · 30초마다 새로 받음(관리자뷰 사본은 서버가 1분마다 갱신 → 신청 후 최대 1~2분 안에 표시)
+ *  · 번인 방지: 3분마다 위치 이동, 30분마다 배경 3가지 순환, 22~6시 어둡게, 6시간마다 통째로 새로 불러오기
+ *  · 처음 한 번 화면을 누르면 전체 화면 + 화면 꺼짐 방지(지원하는 브라우저) */
+var BOARD_MODE=/[?&]board(=|&|$)/.test(location.search);
+var BOARD_KEYS=['jeungmyeong','mulpum','myeongham','geunmubok','anjeon','upyeon','welcome'];
+var BOARD_COLOR={jeungmyeong:'#60a5fa',mulpum:'#fbbf24',myeongham:'#a5b4fc',geunmubok:'#f472b6',anjeon:'#fb923c',upyeon:'#c084fc',welcome:'#a3e635'};
+var BOARD_SHIFT=[[0,0],[10,6],[-8,12],[6,-10],[-12,-4],[4,10]];
+var BOARD={data:[], at:0, fail:0, loading:false};
+function bPad(n){return (n<10?'0':'')+n;}
+function boardSheets(){ return BOARD_KEYS.map(function(k){return SHEETS.filter(function(s){return s.key===k;})[0];}).filter(Boolean); }
+function boardFetch(){
+  if(BOARD.loading) return; BOARD.loading=true;
+  var acc=[], fail=[], list=boardSheets();
+  Promise.all(list.map(function(s){ return loadSheetInto(s, acc, fail); })).then(function(){
+    BOARD.loading=false;
+    if(fail.length>=list.length){ BOARD.fail++; }
+    else {
+      /* 못 읽은 종류는 직전 화면 내용을 그대로 둔다 */
+      var keep=BOARD.data.filter(function(e){ return fail.indexOf(e.sheet.btn||e.sheet.name)>=0; });
+      BOARD.data=acc.concat(keep); BOARD.at=Date.now(); BOARD.fail=fail.length?BOARD.fail+1:0;
+    }
+    boardPaint();
+  });
+}
+function boardPaint(){
+  var box=document.getElementById('board'); if(!box) return;
+  var now=new Date(), start=new Date(now.getFullYear(),now.getMonth(),now.getDate()).getTime(), nowT=now.getTime();
+  var DW=['일','월','화','수','목','금','토'];
+  var today=BOARD.data.filter(function(e){ return e.date && e.date.getTime()>=start && e.date.getTime()<=nowT+600000; });
+  var all=0, nw=0;
+  var cols=boardSheets().map(function(S){
+    var its=today.filter(function(e){ return e.sheet===S; }).sort(function(a,b){ return b.date-a.date; });
+    all+=its.length;
+    return '<div class="bcol"><div class="bch"><i style="background:'+BOARD_COLOR[S.key]+'"></i><b>'+esc(S.name)+'</b><span class="n'+(its.length?' on':'')+'">'+its.length+'</span></div><div class="bitems">'+
+      (its.length? its.map(function(e){
+        var min=Math.floor((nowT-e.date.getTime())/60000), isNew=e.hasTime && min<=30;
+        if(isNew) nw++;
+        var ago=!e.hasTime?'':(min<1?'방금':min<60?min+'분 전':Math.floor(min/60)+'시간 전');
+        return '<div class="bit'+(isNew?' new':'')+'" style="border-left-color:'+BOARD_COLOR[S.key]+'55"><div class="tm">'+(isNew?'<span class="nw">NEW</span>':'')+
+          (e.hasTime? bPad(e.date.getHours())+':'+bPad(e.date.getMinutes()) : '오늘')+'<span class="ago">'+ago+'</span></div>'+
+          '<div class="nm">'+esc(e.name||'-')+'</div><div class="ds">'+esc(e.summary||'')+'</div></div>';
+      }).join('') : '<div class="bnone">오늘 들어온<br>신청 없음</div>')+'</div></div>';
+  }).join('');
+  var at=BOARD.at? new Date(BOARD.at):null;
+  box.innerHTML='<div class="btop"><div class="blogo"><img src="./admin-icon-192.png" alt=""></div>'+
+    '<div class="bttl"><b>오늘의 신청 현황</b><span>HANYANG ELECTRIC · ADMIN</span></div>'+
+    '<div class="bstats"><div class="bst"><div class="k">오늘 신청</div><div class="v">'+all+'</div></div><div class="bst hl"><div class="k">최근 30분</div><div class="v">'+nw+'</div></div></div>'+
+    '<div class="bclock"><b>'+bPad(now.getHours())+':'+bPad(now.getMinutes())+'</b><span>'+(now.getMonth()+1)+'월 '+now.getDate()+'일 '+DW[now.getDay()]+'요일</span><br>'+
+    (BOARD.fail>=2? '<span class="blive off"><i></i>연결 확인 중 · '+(at? bPad(at.getHours())+':'+bPad(at.getMinutes())+' 기준':'')+'</span>'
+                  : '<span class="blive"><i></i>'+(at? '30초마다 자동 갱신 · '+bPad(at.getHours())+':'+bPad(at.getMinutes())+':'+bPad(at.getSeconds()) : '불러오는 중…')+'</span>')+'</div></div>'+
+    '<div class="bcols">'+cols+'</div>'+
+    '<div class="bfoot"><span>오늘 0시 이후 들어온 신청을 하루 동안 표시합니다 · 내일 0시에 새로 시작</span><span class="r">한양전공(주) 경영지원부</span></div>';
+  boardFit();
+  var h=now.getHours(); box.classList.toggle('night', h>=22 || h<6);
+  var sh=BOARD_SHIFT[Math.floor(Date.now()/180000)%BOARD_SHIFT.length];
+  box.style.setProperty('--sx',sh[0]+'px'); box.style.setProperty('--sy',sh[1]+'px');
+  var th=Math.floor(Date.now()/1800000)%3;
+  box.classList.remove('th0','th1','th2'); box.classList.add('th'+th);
+}
+/* 칸에 다 안 들어가면 오래된 것부터 접고 "이전 n건 더 있음" — 스크롤 없음 */
+function boardFit(){
+  var cs=document.querySelectorAll('#board .bcol');
+  for(var c=0;c<cs.length;c++){
+    var box=cs[c].querySelector('.bitems'), its=box.querySelectorAll('.bit'), hidden=0, more=null;
+    while(box.scrollHeight>box.clientHeight+1 && its.length-hidden>1){
+      its[its.length-1-hidden].style.display='none'; hidden++;
+      if(!more){ more=document.createElement('div'); more.className='bmore'; box.appendChild(more); }
+      more.textContent='이전 '+hidden+'건 더 있음';
+    }
+  }
+}
+var boardLock=null;
+function boardWake(){ try{ if(navigator.wakeLock && document.visibilityState==='visible') navigator.wakeLock.request('screen').then(function(l){boardLock=l;}).catch(function(){}); }catch(e){} }
+function boardBoot(){
+  document.title='오늘의 신청 현황 · 한양전공(주)';
+  var box=document.createElement('div'); box.id='board'; box.className='th0'; document.body.appendChild(box);
+  document.body.classList.add('boardmode');
+  var hint=document.createElement('div'); hint.id='boardHint'; hint.textContent='화면을 한 번 누르면 전체 화면으로 바뀝니다'; document.body.appendChild(hint);
+  document.addEventListener('click',function(){ try{ var d=document.documentElement; (d.requestFullscreen||d.webkitRequestFullscreen||function(){}).call(d); }catch(e){} boardWake(); if(hint.parentNode) hint.remove(); },{once:true});
+  document.addEventListener('visibilitychange',function(){ if(document.visibilityState==='visible'){ boardWake(); boardFetch(); } });
+  window.addEventListener('resize',function(){ boardFit(); });
+  boardPaint(); boardFetch(); boardWake();
+  setInterval(boardFetch, 30000);                              /* 30초마다 새로 */
+  setInterval(boardPaint, 20000);                              /* 시계·NEW·번인 방지 */
+  setInterval(function(){ location.reload(); }, 6*3600000);    /* 6시간마다 통째로 새로 (앱이 바뀌어도 따라감) */
+}
+</script>
 
 <script>
   var SHEETS=[
@@ -342,11 +482,14 @@
     document.getElementById('refresh').addEventListener('click',function(){loadAll(false);});
   }
 
+  if(BOARD_MODE){ boardBoot(); }   /* ?board — 오늘의 신청 현황판만 띄운다 */
+  else {
   buildUI();
   loadAll(false);
   setInterval(function(){ if(!document.hidden) loadAll(true); }, 60000);
   document.addEventListener('visibilitychange', function(){ if(!document.hidden) loadAll(true); });
   window.addEventListener('focus', function(){ loadAll(true); });
+  }
 </script>
 </body>
 </html>
