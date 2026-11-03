@@ -96,7 +96,11 @@
   #board.th0{background:linear-gradient(135deg,#1d1238,#2b1957)}
   #board.th1{background:linear-gradient(135deg,#0f1d36,#17305a)}
   #board.th2{background:linear-gradient(135deg,#0d2a2b,#14403f)}
-  #board.night{filter:brightness(.3)}
+  /* 업무시간 외(평일 18~09시, 금 18시~월 09시) 검정 화면 — 모니터를 끄지 않아도 되게 (11/3) */
+  #board.off{background:#000!important;background-color:#000!important}
+  body.boardoff{background:#000!important}
+  #board.off > *{visibility:hidden}
+  #boardHint.off{display:none}
   #board .btop{display:flex;align-items:center;gap:1.2em}
   #board .blogo{width:2.9em;height:2.9em;border-radius:.8em;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden}
   #board .blogo img{width:100%;height:100%;display:block}
@@ -217,7 +221,8 @@
  *  사무실 모니터에 …/hyele-admin/?board 로 계속 띄워 두는 전용 화면.
  *  오늘 0시 이후 들어온 신청 7종을 하루 동안 그대로 보여 준다(처리 여부와 무관, 화면에서 지우는 기능 없음). 다음 날 0시에 새로 시작.
  *  · 30초마다 새로 받음(관리자뷰 사본은 서버가 1분마다 갱신 → 신청 후 최대 1~2분 안에 표시)
- *  · 번인 방지: 3분마다 위치 이동, 30분마다 배경 3가지 순환, 22~6시 어둡게, 6시간마다 통째로 새로 불러오기
+ *  · 번인 방지: 3분마다 위치 이동, 30분마다 배경 3가지 순환, 6시간마다 통째로 새로 불러오기
+ *  · 업무시간(평일 09:00~18:00) 외에는 검정 화면 — 금요일 18시~월요일 09시 포함. 그동안은 자료도 받지 않는다 (11/3)
  *  · 처음 한 번 화면을 누르면 전체 화면 + 화면 꺼짐 방지(지원하는 브라우저) */
 var BOARD_MODE=/[?&]board(=|&|$)/.test(location.search);
 var BOARD_KEYS=['jeungmyeong','mulpum','myeongham','geunmubok','anjeon','upyeon','welcome'];
@@ -235,7 +240,10 @@ var BOARD_SHIFT=[[0,0],[10,6],[-8,12],[6,-10],[-12,-4],[4,10]];
 var BOARD={data:[], at:0, fail:0, loading:false};
 function bPad(n){return (n<10?'0':'')+n;}
 function boardSheets(){ return BOARD_KEYS.map(function(k){return SHEETS.filter(function(s){return s.key===k;})[0];}).filter(Boolean); }
+/* 업무시간: 월~금 09:00~18:00 (공휴일은 구분하지 않음) */
+function boardOn(d){ d=d||new Date(); var w=d.getDay(), h=d.getHours(); return w>=1 && w<=5 && h>=9 && h<18; }
 function boardFetch(){
+  if(!boardOn()) return;
   if(BOARD.loading) return; BOARD.loading=true;
   var acc=[], fail=[], list=boardSheets();
   Promise.all(list.map(function(s){ return loadSheetInto(s, acc, fail); })).then(function(){
@@ -251,6 +259,10 @@ function boardFetch(){
 }
 function boardPaint(){
   var box=document.getElementById('board'); if(!box) return;
+  var on=boardOn(), hint=document.getElementById('boardHint');
+  box.classList.toggle('off', !on); document.body.classList.toggle('boardoff', !on); if(hint) hint.classList.toggle('off', !on);
+  if(!on){ BOARD.wasOff=true; return; }
+  if(BOARD.wasOff){ BOARD.wasOff=false; BOARD.data=[]; BOARD.at=0; boardFetch(); }
   var now=new Date(), start=new Date(now.getFullYear(),now.getMonth(),now.getDate()).getTime(), nowT=now.getTime();
   var DW=['일','월','화','수','목','금','토'];
   var today=BOARD.data.filter(function(e){ return e.date && e.date.getTime()>=start && e.date.getTime()<=nowT+600000; });
@@ -278,7 +290,6 @@ function boardPaint(){
     '<div class="brows">'+cols+'</div>'+
     '<div class="bfoot"><span>오늘 0시 이후 들어온 신청을 하루 동안 표시합니다 · 내일 0시에 새로 시작</span><span class="r">한양전공(주) 경영지원부</span></div>';
   boardFit();
-  var h=now.getHours(); box.classList.toggle('night', h>=22 || h<6);
   var sh=BOARD_SHIFT[Math.floor(Date.now()/180000)%BOARD_SHIFT.length];
   box.style.setProperty('--sx',sh[0]+'px'); box.style.setProperty('--sy',sh[1]+'px');
   var th=Math.floor(Date.now()/1800000)%3;
